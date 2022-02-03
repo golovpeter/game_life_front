@@ -7,7 +7,8 @@ function Square(props) {
         <button
             className="square"
             style={{background: props.isSelected ? "palevioletred" : "#fff"}}
-            onMouseEnter={props.onClick}/>
+            onMouseEnter={props.onMouseEnter}
+            onClick={props.onClick}/>
     );
 }
 
@@ -67,7 +68,9 @@ class Board extends React.Component {
             <Square
                 key={`col_${i}_${j}`}
                 isSelected={this.state.gameField[i][j]}
-                onClick={() => !this.state.isGameStarted && this.state.isMouseDown ? this.handleClick(i, j) : () => {
+                onMouseEnter={() => !this.state.isGameStarted && this.state.isMouseDown ? this.handleClick(i, j) : () => {
+                }}
+                onClick={() => !this.state.isGameStarted ? this.handleClick(i, j) : () => {
                 }}/>
         );
     }
