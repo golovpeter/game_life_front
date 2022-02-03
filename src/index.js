@@ -17,6 +17,7 @@ class Board extends React.Component {
         this.state = {
             gameField: Array(30).fill(null).map(() => Array(50).fill(0)),
             isGameStarted: false,
+            isMouseDown: false,
         };
     }
 
@@ -66,14 +67,16 @@ class Board extends React.Component {
             <Square
                 key={`col_${i}_${j}`}
                 isSelected={this.state.gameField[i][j]}
-                onClick={() => !this.state.isGameStarted ? this.handleClick(i, j) : () => {
+                onClick={() => !this.state.isGameStarted && this.state.isMouseDown ? this.handleClick(i, j) : () => {
                 }}/>
         );
     }
 
     render() {
         return (
-            <div>
+            <div
+                onMouseDown={() => this.setState({isMouseDown: true})}
+                onMouseUp={() => this.setState({isMouseDown: false})}>
                 {this.state.gameField.map((row, i) => (
                     <div key={`row_${i}`} className="board-row">
                         {row.map((col, j) => this.renderSquare(i, j))}
