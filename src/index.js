@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {isMobile} from "react-device-detect";
+import {isEqual} from 'underscore';
 import './index.css';
 
 function Square(props) {
@@ -54,7 +55,12 @@ class Board extends React.Component {
             body: JSON.stringify({gameID: this.state.gameID})
         }).then(r => r.json())
             .then(r => {
-                this.setState({gameField: r.GameField});
+                if (isEqual(r.GameField, this.state.gameField)) {
+                    clearInterval(this.intervalID)
+                    this.setState({isGameStarted: false})
+                } else {
+                    this.setState({gameField: r.GameField});
+                }
             });
     }
 
