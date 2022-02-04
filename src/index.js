@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {isMobile} from "react-device-detect";
 import './index.css';
 
 function Square(props) {
@@ -16,7 +17,10 @@ class Board extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameField: Array(30).fill(null).map(() => Array(50).fill(0)),
+            gameField:
+                isMobile ?
+                    Array(15).fill(null).map(() => Array(15).fill(0)) :
+                    Array(30).fill(null).map(() => Array(50).fill(0)),
             isGameStarted: false,
             isMouseDown: false,
         };
@@ -55,12 +59,14 @@ class Board extends React.Component {
     }
 
     stopGame() {
-        clearInterval(this.intervalID)
-        this.setState({isGameStarted: false})
+        clearInterval(this.intervalID);
+        this.setState({isGameStarted: false});
     }
 
     cleanField() {
-        this.setState({gameField: Array(30).fill(null).map(() => Array(50).fill(0))})
+        isMobile ?
+            this.setState({gameField: Array(15).fill(null).map(() => Array(15).fill(0))}) :
+            this.setState({gameField: Array(30).fill(null).map(() => Array(50).fill(0))});
     }
 
     renderSquare(i, j) {
