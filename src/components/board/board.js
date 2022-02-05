@@ -26,7 +26,7 @@ class Board extends React.Component {
     }
 
     startGame() {
-        fetch("http://localhost:8000/startGame", {
+        fetch("/startGame", {
             method: "POST",
             body: JSON.stringify({startField: this.state.gameField})
         }).then(r => r.json())
@@ -40,7 +40,7 @@ class Board extends React.Component {
     }
 
     nextStep() {
-        fetch("http://localhost:8000/nextStep", {
+        fetch("/nextStep", {
             method: "POST",
             body: JSON.stringify({gameID: this.state.gameID})
         }).then(r => r.json())
