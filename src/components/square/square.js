@@ -4,7 +4,7 @@ export function Square(props) {
     return (
         <button
             className="square"
-            style={{background: props.isSelected ? "hsl(" + Math.random() * 360 + ", 100%, 75%)" : "#fff"}}
+            style={{background: props.isSelected ? "palevioletred" : "#fff"}}
             onMouseEnter={props.onMouseEnter}
             onClick={props.onClick}/>
     );
