@@ -59,6 +59,19 @@ class Board extends React.Component {
         this.setState({isGameStarted: false});
     }
 
+    oneStep() {
+        fetch("/startGame", {
+            method: "POST",
+            body: JSON.stringify({startField: this.state.gameField})
+        }).then(r => r.json())
+            .then(r => {
+                this.setState({
+                    gameID: r.GameID,
+                })
+                this.nextStep();
+            });
+    }
+
     cleanField() {
         isMobile ?
             this.setState({gameField: Array(15).fill(null).map(() => Array(15).fill(0))}) :
@@ -92,6 +105,12 @@ class Board extends React.Component {
                         className="mainButton"
                         onClick={() => !this.state.isGameStarted ? this.startGame() : this.stopGame()}>
                         {!this.state.isGameStarted ? 'Start Game' : 'Stop Game'}
+                    </button>
+                    <button
+                        className="mainButton"
+                        onClick={() => this.oneStep()}
+                        disabled={this.state.isGameStarted}>
+                        One step
                     </button>
                     <button
                         className="mainButton"
